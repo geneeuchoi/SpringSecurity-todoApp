@@ -26,10 +26,16 @@ public class ToDo extends Timestamped {
     @Column(name = "password", nullable = false)
     private String password;
 
-    public ToDo(ToDoRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.contents = requestDto.getContents();
-        this.manager = requestDto.getManager();
-        this.password = requestDto.getPassword();
+    public ToDo(ToDoRequestDto toDoRequestDto) {
+        this.title = toDoRequestDto.getTitle();
+        this.contents = toDoRequestDto.getContents();
+        this.manager = toDoRequestDto.getManager();
+        this.password = toDoRequestDto.getPassword();
+    }
+
+    public void update(ToDoRequestDto toDoRequestDto) {
+        this.title = toDoRequestDto.getTitle();
+        this.contents = toDoRequestDto.getContents();
+        this.manager = toDoRequestDto.getManager();
     }
 }

@@ -34,5 +34,11 @@ public class ToDoController {
         return toDoService.getAllToDo();
     }
 
+    //4단계 - 선택한 일정 수정: 제목, 내용, 담당자를 수정
+    @PutMapping("/toDo/{id}")
+    public ToDoResponseDto updateToDo(@PathVariable Long id, @RequestBody ToDoRequestDto toDoRequestDto){
+        return toDoService.updateToDo(id, toDoRequestDto);
+    }
+
 
 }
