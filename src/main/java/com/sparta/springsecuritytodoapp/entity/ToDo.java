@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +26,10 @@ public class ToDo extends Timestamped {
     private String manager;
     @Column(name = "password", nullable = false)
     private String password;
+
+    // 하나의 스케쥴에 다수의 댓글이 달리므로 댓글N : 스케쥴1 관계 설정
+    @OneToMany(mappedBy = "toDo")
+    private List<Comment> commentList;
 
     public ToDo(ToDoRequestDto toDoRequestDto) {
         this.title = toDoRequestDto.getTitle();
