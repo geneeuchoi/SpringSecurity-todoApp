@@ -15,4 +15,9 @@ public class ToDoService {
         ToDo toDo = toDoRepository.save(new ToDo(requestDto));
         return new ToDoResponseDto(toDo);
     }
+
+    public ToDoResponseDto getToDo(Long id) {
+        ToDo toDo = toDoRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("선택한 일정이 존재하지 않습니다."));
+        return new ToDoResponseDto(toDo);
+    }
 }
