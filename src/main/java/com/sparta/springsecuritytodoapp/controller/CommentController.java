@@ -4,10 +4,7 @@ import com.sparta.springsecuritytodoapp.dto.CommentRequestDto;
 import com.sparta.springsecuritytodoapp.dto.CommentResponseDto;
 import com.sparta.springsecuritytodoapp.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,5 +18,11 @@ public class CommentController {
     @PostMapping("/comment")
     public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto) {
         return commentService.createComment(requestDto);
+    }
+
+    //2단계 - 댓글 수정
+    @PutMapping("/comment/{comment_Id}")
+    public CommentResponseDto createComment(@PathVariable Long comment_Id, @RequestBody CommentRequestDto requestDto) {
+        return commentService.updateComment(requestDto, comment_Id);
     }
 }

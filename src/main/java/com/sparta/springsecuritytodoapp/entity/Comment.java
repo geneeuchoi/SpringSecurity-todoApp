@@ -48,4 +48,9 @@ public class Comment extends Timestamped {
         this.comment_Id = requestDto.getComment_Id();
         this.toDo = toDo;
     }
+
+    public void update(CommentRequestDto requestDto) {
+        //댓글 내용만 수정 가능
+        this.content = requestDto.getContent();
+    }
 }

@@ -9,6 +9,7 @@ import com.sparta.springsecuritytodoapp.repository.CommentRepository;
 import com.sparta.springsecuritytodoapp.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +42,32 @@ public class CommentService {
         );
 
         return new CommentResponseDto(commentRepository.save(new Comment(requestDto, toDo)));
+    }
+
+    @Transactional
+    public CommentResponseDto updateComment(CommentRequestDto requestDto, Long comment_Id) {
+        //수정된 댓글 반환
+        //댓글 내용만 수정 가능
+        //선택한 일정과 댓글이 DB에 저장되어 있어야 함
+
+        //예외 처리: 선택한 일정이나 댓글의 ID를 입력받지 않은 경우
+        if(requestDto.getToDo_Id() == null && requestDto.getComment_Id() == null) {
+            throw new IllegalArgumentException("일정 ID, 댓글 ID를 입력해주세요.");
+        }
+        //예외 처리: 일정이나 댓글이 DB에 저장되지 않은 경우
+        Comment comment = commentRepository.findById(comment_Id).orElseThrow(
+                () -> new IllegalArgumentException("등록된 댓글이 없습니다.")
+        );
+        toDoRepository.findById(requestDto.getToDo_Id()).orElseThrow(
+                () -> new IllegalArgumentException("등록된 일정이 없습니다.")
+        );
+        //예외 처리: 선택한 댓글의 사용자가 현재 사용자와 일치하지 않은 경우
+        if(!comment.getComment_Id().equals(requestDto.getComment_Id())) {
+            throw new IllegalArgumentException("올바른 사용자가 아닙니다.");
+        }
+
+        comment.update(requestDto);
+        return new CommentResponseDto(comment);
+
     }
 }
