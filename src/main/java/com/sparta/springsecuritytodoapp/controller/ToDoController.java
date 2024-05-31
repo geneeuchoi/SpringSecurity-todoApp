@@ -5,6 +5,8 @@ import com.sparta.springsecuritytodoapp.dto.ToDoResponseDto;
 import com.sparta.springsecuritytodoapp.service.ToDoService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class ToDoController {
@@ -25,4 +27,12 @@ public class ToDoController {
     public ToDoResponseDto getToDo(@PathVariable Long id){
         return toDoService.getToDo(id);
     }
+
+    //3단계 - 등록된 일정 전체 조회, 작성일 기준 내림차순 정렬
+    @GetMapping("/toDo/{id}")
+    public List<ToDoResponseDto> getAllToDo(){
+        return toDoService.getAllToDo();
+    }
+
+
 }

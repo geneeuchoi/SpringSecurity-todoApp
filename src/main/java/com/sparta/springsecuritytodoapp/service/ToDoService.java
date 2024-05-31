@@ -7,6 +7,8 @@ import com.sparta.springsecuritytodoapp.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ToDoService {
@@ -19,5 +21,9 @@ public class ToDoService {
     public ToDoResponseDto getToDo(Long id) {
         ToDo toDo = toDoRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("선택한 일정이 존재하지 않습니다."));
         return new ToDoResponseDto(toDo);
+    }
+
+    public List<ToDoResponseDto> getAllToDo() {
+        return toDoRepository.findAllByOrderByModifiedAtDesc().stream().map(ToDoResponseDto::new).toList();
     }
 }
