@@ -40,5 +40,11 @@ public class ToDoController {
         return toDoService.updateToDo(id, toDoRequestDto);
     }
 
+    //5단계 - 선택한 일정 삭제
+    @DeleteMapping("/toDo/{id}")
+    public Long deleteToDo(@PathVariable Long id, @RequestBody ToDoRequestDto toDoRequestDto){
+        return toDoService.deleteToDo(id, toDoRequestDto);
+    }
+
 
 }

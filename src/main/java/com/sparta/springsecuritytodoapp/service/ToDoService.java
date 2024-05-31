@@ -42,4 +42,16 @@ public class ToDoService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
     }
+
+    public Long deleteToDo(Long id, ToDoRequestDto toDoRequestDto) {
+        ToDo toDo = toDoRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("선택한 일정이 존재하지 않습니다."));
+
+        //저장된 패스워드와 responseDto의 패스워드가 같은지 검사
+        if(toDo.getPassword().equals(toDoRequestDto.getPassword())) {
+            toDoRepository.delete(toDo);
+            return id;
+        } else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+    }
 }
