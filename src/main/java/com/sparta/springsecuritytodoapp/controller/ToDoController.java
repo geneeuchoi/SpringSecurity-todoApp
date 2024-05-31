@@ -29,7 +29,7 @@ public class ToDoController {
     }
 
     //3단계 - 등록된 일정 전체 조회, 작성일 기준 내림차순 정렬
-    @GetMapping("/toDo/{id}")
+    @GetMapping("/toDo")
     public List<ToDoResponseDto> getAllToDo(){
         return toDoService.getAllToDo();
     }
