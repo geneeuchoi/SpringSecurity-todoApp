@@ -1,5 +1,6 @@
 package com.sparta.springsecuritytodoapp.entity;
 
+import com.sparta.springsecuritytodoapp.dto.ToDoRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,15 @@ public class ToDo extends Timestamped {
     private String title;
     @Column(name = "contents", nullable = true, length = 100)
     private String contents;
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "manager", nullable = false)
+    private String manager;
     @Column(name = "password", nullable = false)
     private String password;
+
+    public ToDo(ToDoRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.manager = requestDto.getManager();
+        this.password = requestDto.getPassword();
+    }
 }
