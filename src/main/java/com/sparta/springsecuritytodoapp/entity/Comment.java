@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "comment")
 @NoArgsConstructor
 public class Comment extends Timestamped {
@@ -36,11 +35,6 @@ public class Comment extends Timestamped {
     @ManyToOne
     @JoinColumn(name = "toDo_Id", nullable = false)
     private ToDo toDo;
-
-    //작성 일자
-    @CreatedDate
-    @Column(name = "createAt", updatable = false)
-    private LocalDateTime createdAt;
 
 
     public Comment(CommentRequestDto requestDto, ToDo toDo) {

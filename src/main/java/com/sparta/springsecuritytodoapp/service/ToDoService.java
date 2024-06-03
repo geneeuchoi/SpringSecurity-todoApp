@@ -30,27 +30,32 @@ public class ToDoService {
 
     @Transactional
     public ToDoResponseDto updateToDo(Long id, ToDoRequestDto toDoRequestDto) {
-        ToDo toDo = toDoRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("선택한 일정이 존재하지 않습니다."));
+        ToDo toDo = this.findTodo(id);
 
-        //저장된 패스워드와 responseDto의 패스워드가 같은지 검사
-        if(toDo.getPassword().equals(toDoRequestDto.getPassword())) {
-            toDo.update(toDoRequestDto);
-            //변경사항을 저장
-            //toDoRepository.save(toDo);
-            return new ToDoResponseDto(toDo);
-        } else {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
+        // 이 메소드를 통과하면 패스워드가 검증된 것,
+        // 검증되지 않으면 exception이 던져지므로 나머지 로직이 수행되지 않는다.
+        this.verifyPassword(toDo, toDoRequestDto);
+
+        toDo.update(toDoRequestDto);
+
+        return new ToDoResponseDto(toDo);
     }
 
     public Long deleteToDo(Long id, ToDoRequestDto toDoRequestDto) {
-        ToDo toDo = toDoRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("선택한 일정이 존재하지 않습니다."));
+        ToDo toDo = this.findTodo(id);
 
-        //저장된 패스워드와 responseDto의 패스워드가 같은지 검사
-        if(toDo.getPassword().equals(toDoRequestDto.getPassword())) {
-            toDoRepository.delete(toDo);
-            return id;
-        } else {
+        this.verifyPassword(toDo, toDoRequestDto);
+        toDoRepository.delete(toDo);
+
+        return id;
+    }
+
+    private ToDo findTodo(Long id) {
+        return toDoRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("선택한 일정이 존재하지 않습니다."));
+    }
+
+    private void verifyPassword(ToDo toDo, ToDoRequestDto toDoRequestDto) {
+        if(!toDo.getPassword().equals(toDoRequestDto.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
     }

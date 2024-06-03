@@ -52,7 +52,7 @@ public class CommentService {
         //선택한 일정과 댓글이 DB에 저장되어 있어야 함
 
         //예외 처리: 선택한 일정이나 댓글의 ID를 입력받지 않은 경우
-        if(requestDto.getToDo_Id() == null && requestDto.getComment_Id() == null) {
+        if(requestDto.getToDo_Id() == null || requestDto.getComment_Id() == null) {
             throw new IllegalArgumentException("일정 ID, 댓글 ID를 입력해주세요.");
         }
         //예외 처리: 일정이나 댓글이 DB에 저장되지 않은 경우
@@ -74,7 +74,7 @@ public class CommentService {
     @Transactional
     public String deleteComment(Long comment_Id, CommentRequestDto requestDto) {
         //예외 처리: 선택한 일정이나 댓글의 ID를 입력받지 않은 경우
-        if(requestDto.getToDo_Id() == null && requestDto.getComment_Id() == null) {
+        if(requestDto.getToDo_Id() == null || requestDto.getComment_Id() == null) {
             throw new IllegalArgumentException("일정 ID, 댓글 ID를 입력해주세요.");
         }
         //예외 처리: 일정이나 댓글이 DB에 저장되지 않은 경우
