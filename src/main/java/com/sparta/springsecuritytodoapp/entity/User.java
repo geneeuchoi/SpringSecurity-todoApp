@@ -1,32 +1,32 @@
 package com.sparta.springsecuritytodoapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@Table(name = "users")
-public class User extends Timestamped{
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String nickname;
 
-    @Column(nullable = false, unique = true)
+    @Length(min = 4, max = 10)
+    @Column(unique = true, nullable = false)
     private String username;
-
-
+    @Length(min = 8, max = 15)
     @Column(nullable = false)
     private String password;
+    private String authority;
 
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private UserRoleEnum role;
-
+    public void setUserInfo(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
